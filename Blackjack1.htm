@@ -1,0 +1,73 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+    <script>
+
+function rand(pMin, pMax) {
+    return Math.floor(Math.random() * (pMax - pMin + 1)) + pMin;
+}
+
+function pickRandomElFrom(pArray) {
+    return (pArray[rand(0, pArray.length - 1)])
+}
+
+function shuffle(pArray) {
+  let currentIndex = pArray.length;
+  let tempValue = 0;
+  let randomIndex = 0;
+
+  while (currentIndex !== 0) {
+    currentIndex--;
+    randomIndex = rand(0, currentIndex)
+
+    // Swap
+    tempValue = pArray[currentIndex];
+    pArray[currentIndex] = pArray[randomIndex];
+    pArray[randomIndex] = tempValue;
+  }
+
+  return pArray;
+}
+
+function removeFrom(pArray, pFirstOccurenceOfEl) {
+    let index = pArray.indexOf(pFirstOccurenceOfEl);
+    pArray = pArray.splice(index, 1);
+
+    return pArray;
+}
+
+function play() {
+    let deck = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
+    let playerHand = [9, 9];
+    let senderHand = [2, pickRandomElFrom(deck)];
+    let counted = 0;
+
+    removeFrom(deck, playerHand[0]);
+    removeFrom(deck, playerHand[1]);
+    removeFrom(deck, senderHand[0]);
+    removeFrom(deck, senderHand[1]);
+    shuffle(deck);
+
+    let newPlayerPickedCard = pickRandomElFrom(deck);
+
+    return (newPlayerPickedCard <= 3)
+}
+
+function test(pNbTests) {
+    let burstCards = 0;
+    for (let i = 0; i < pNbTests; i++) {
+        if (play() === false) {
+            burstCards++;
+        }
+    }
+
+    return (burstCards / pNbTests);
+}
+
+console.log(test(100000));
+
+    </script>
+    </body>
+</html>
