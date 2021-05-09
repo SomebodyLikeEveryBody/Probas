@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+    <script>
+
+function rand(pMin, pMax) {
+    return Math.floor(Math.random() * (pMax - pMin + 1)) + pMin;
+}
+
+function play() {
+    let jokerPos = rand(0, 9);
+    let nbCardsFlipped = 1;
+
+    for(let i = 0; i !== jokerPos; i++) {
+        nbCardsFlipped++;
+    }
+
+    return(nbCardsFlipped)
+}
+
+function test(pNbTests) {
+    let sumFlippedCards = 0;
+    for (let i = 0; i < pNbTests; i++) {
+        sumFlippedCards += play();
+    }
+
+    return (sumFlippedCards / pNbTests);
+}
+
+console.log(test(100000));
+
+    </script>
+    </body>
+</html>
